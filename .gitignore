@@ -1,0 +1,24 @@
+# Annoying files
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+# binary junk
+*.zip
+*.iso
+*.gz
+*.tgz
+*.tar
+*.tar.gz
+*.7z
+*.pcap
+*.jar
+*.o
+*.d
+*.class
+[Tt]humbs.db
+*.DS_Store
+# Editor temporary files
+*.swp
+~$*
+*.pyc
