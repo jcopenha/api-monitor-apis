@@ -1,0 +1,135 @@
+<!--
+    API Monitor Definitions
+    (c) 2012, Rohitab Batra <rohitab@rohitab.com>
+    http://www.rohitab.com/apimonitor/
+-->
+<ApiMonitor>
+    <Include Filename="Headers\windows.h.xml" />
+    <Include Filename="Headers\registry.h.xml" />
+    <Include Filename="Headers\events.h.xml" />
+    <Include Filename="Headers\services.h.xml" />
+    <Include Filename="Headers\cryptography.h.xml" />
+    <Include Filename="Headers\security.h.xml" />
+    <Include Filename="Headers\native.h.xml" />
+    <Include Filename="Headers\network.h.xml" />
+    <Include Filename="Headers\processes.h.xml" />
+    <Include Filename="Headers\shell.h.xml" />
+    <Include Filename="Headers\setup.h.xml" />
+
+
+<Module Name="RsaEnh.dll" CallingConvention="STDCALL" ErrorFunc="GetLastError" OnlineHelp="MSDN">
+
+    <!-- VTableProvStruc -->
+    <Variable Name="VTableProvStruc" Type="Struct">
+        <Field Type="DWORD" Name="Version" />
+        <Field Type="FARPROC" Name="FuncVerifyImage" />
+        <Field Type="FARPROC" Name="FuncReturnhWnd" />
+        <Field Type="DWORD" Name="dwProvType" />
+        <Field Type="BYTE*" Name="pbContextInfo" />
+        <Field Type="DWORD" Name="cbContextInfo" />
+        <Field Type="LPSTR" Name="pszProvName" />
+    </Variable>
+    <Variable Name="PVTableProvStruc" Type="Pointer" Base="VTableProvStruc" />
+
+
+    <Api Name="CPAcquireContext" BothCharset="False">
+        <Param Type="HCRYPTPROV*" Name="phProv" />
+        <Param Type="WCHAR*" Name="pszContainer" />
+        <Param Type="DWORD" Name="dwFlags" />
+        <Param Type="PVTableProvStruc" Name="pVTable" />
+        <Return Type="BOOL" />
+    </Api>
+    <Api Name="CPCreateHash" BothCharset="False">
+        <Param Type="HCRYPTPROV" Name="hProv" />
+        <Param Type="ALG_ID" Name="Algid" />
+        <Param Type="HCRYPTKEY" Name="hKey" />
+        <Param Type="DWORD" Name="dwFlags" />
+        <Param Type="HCRYPTHASH*" Name="phHash" />
+        <Return Type="BOOL" />
+    </Api>
+    <Api Name="CPDecrypt" BothCharset="False">
+        <Param Type="HCRYPTKEY" Name="hKey" />
+        <Param Type="HCRYPTHASH" Name="hHash" /> 
+        <Param Type="BOOL" Name="Final" /> 
+        <Param Type="DWORD" Name="dwFlags" /> 
+        <Param Type="BYTE*" Name="pbData" />
+        <Param Type="DWORD*" NAme="pdwDataLen" />
+        <Return Type="BOOL" />
+    </Api>
+    <Api Name="CPDeriveKey" BothCharset="False">
+        <Param Type="HCRYPTPROV" Name="hProv," /> 
+        <Param Type="ALG_ID" Name="Algid," /> 
+        <Param Type="HCRYPTHASH" Name="hBaseData," /> 
+        <Param Type="DWORD" Name="dwFlags," /> 
+        <Param Type="HCRYPTKEY*" Name="phKey" />
+        <Return Type="BOOL" />
+    </Api>
+    <Api Name="CPDestroyHash" BothCharset="False">
+        <Param Type="HCRYPTHASH" Name="hHash" />
+        <Return Type="BOOL" />
+    </Api>
+    <!--
+<Api Name="CPDestroyKey" BothCharset="False">
+    </Api>
+<Api Name="CPDuplicateHash" BothCharset="False">
+    </Api>
+<Api Name="CPDuplicateKey" BothCharset="False">
+    </Api>
+<Api Name="CPEncrypt" BothCharset="False">
+    </Api>-->
+    <Api Name="CPExportKey" BothCharset="False">
+        <Param Type="HCRYPTKEY" Name="hKey," /> 
+        <Param Type="HCRYPTKEY" Name="hExpKey," /> 
+        <Param Type="DWORD" Name="dwBlobType," /> 
+        <Param Type="DWORD" Name="dwFlags," /> 
+        <Param Type="BYTE*" Name="pbData," /> 
+        <Param Type="DWORD*" Name="pdwbDataLe" />
+        <Return Type="BOOL" />
+    </Api>
+<!--
+<Api Name="CPGenKey" BothCharset="False">
+    </Api>
+<Api Name="CPGenRandom" BothCharset="False">
+    </Api>
+<Api Name="CPGetHashParam" BothCharset="False">
+    </Api>
+-->
+        <Api Name="CPGetKeyParam">
+            <Param Type="HCRYPTKEY" Name="hKey" />
+            <Param Type="[CryptKeyParam]" Name="dwParam" />
+            <Param Type="BYTE*" Name="pbData" PostLength="pdwDataLen" />
+            <Param Type="DWORD*" Name="pdwDataLen" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
+<!--
+<Api Name="CPGetProvParam" BothCharset="False">
+    </Api>
+<Api Name="CPGetUserKey" BothCharset="False">
+    </Api>
+<Api Name="CPHashData" BothCharset="False">
+    </Api>
+<Api Name="CPHashSessionKey" BothCharset="False">
+    </Api>
+<Api Name="CPImportKey" BothCharset="False">
+    </Api>
+<Api Name="CPReleaseContext" BothCharset="False">
+    </Api>
+<Api Name="CPSetHashParam" BothCharset="False">
+    </Api>
+<Api Name="CPSetKeyParam" BothCharset="False">
+    </Api>
+<Api Name="CPSetProvParam" BothCharset="False">
+    </Api>
+<Api Name="CPSignHash" BothCharset="False">
+    </Api>
+<Api Name="CPVerifySignature" BothCharset="False">
+    </Api>-->
+        <Api Name="DllRegisterServer">
+            <Return Type="HRESULT" />
+        </Api>
+        <Api Name="DllUnregisterServer">
+            <Return Type="HRESULT" />
+        </Api>
+    </Module>
+</ApiMonitor>
