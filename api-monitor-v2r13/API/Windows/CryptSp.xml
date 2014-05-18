@@ -6,10 +6,21 @@
 <ApiMonitor>
     <Include Filename="Headers\windows.h.xml" />
 
+<Include Filename="Headers\registry.h.xml" />
+    <Include Filename="Headers\events.h.xml" />
+    <Include Filename="Headers\services.h.xml" />
+    <Include Filename="Headers\cryptography.h.xml" />
+    <Include Filename="Headers\security.h.xml" />
+    <Include Filename="Headers\native.h.xml" />
+    <Include Filename="Headers\network.h.xml" />
+    <Include Filename="Headers\processes.h.xml" />
+    <Include Filename="Headers\shell.h.xml" />
+    <Include Filename="Headers\setup.h.xml" />
+
     <Module Name="CryptSp.dll" CallingConvention="STDCALL" ErrorFunc="GetLastError" OnlineHelp="MSDN">
 
         <!-- Cryptography API's from Advapi32.dll -->
-        <SourceModule Name="Advapi32.dll" Include="Windows\Advapi32.xml">
+        <SourceModule Name="Advapi32.dll" Copy="True" Include="Windows\Advapi32.xml">
             <!-- <Api Name="CheckSignatureInFile" /> -->
             <Api Name="CryptAcquireContextA" />
             <Api Name="CryptAcquireContextW" />
