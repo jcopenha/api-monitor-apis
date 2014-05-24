@@ -17,83 +17,115 @@
     <Include Filename="Headers\setup.h.xml" />
 
 
-<Module Name="RsaEnh.dll" CallingConvention="STDCALL" ErrorFunc="GetLastError" OnlineHelp="MSDN">
+    <Module Name="RsaEnh.dll" CallingConvention="STDCALL" ErrorFunc="GetLastError" OnlineHelp="MSDN">
 
-    <!-- VTableProvStruc -->
-    <Variable Name="VTableProvStruc" Type="Struct">
-        <Field Type="DWORD" Name="Version" />
-        <Field Type="FARPROC" Name="FuncVerifyImage" />
-        <Field Type="FARPROC" Name="FuncReturnhWnd" />
-        <Field Type="DWORD" Name="dwProvType" />
-        <Field Type="BYTE*" Name="pbContextInfo" />
-        <Field Type="DWORD" Name="cbContextInfo" />
-        <Field Type="LPSTR" Name="pszProvName" />
-    </Variable>
-    <Variable Name="PVTableProvStruc" Type="Pointer" Base="VTableProvStruc" />
+        <!-- VTableProvStruc -->
+        <Variable Name="VTableProvStruc" Type="Struct">
+            <Field Type="DWORD" Name="Version" />
+            <Field Type="FARPROC" Name="FuncVerifyImage" />
+            <Field Type="FARPROC" Name="FuncReturnhWnd" />
+            <Field Type="DWORD" Name="dwProvType" />
+            <Field Type="BYTE*" Name="pbContextInfo" />
+            <Field Type="DWORD" Name="cbContextInfo" />
+            <Field Type="LPSTR" Name="pszProvName" />
+        </Variable>
+        <Variable Name="PVTableProvStruc" Type="Pointer" Base="VTableProvStruc" />
 
 
-    <Api Name="CPAcquireContext" BothCharset="False">
-        <Param Type="HCRYPTPROV*" Name="phProv" />
-        <Param Type="WCHAR*" Name="pszContainer" />
-        <Param Type="DWORD" Name="dwFlags" />
-        <Param Type="PVTableProvStruc" Name="pVTable" />
-        <Return Type="BOOL" />
-    </Api>
-    <Api Name="CPCreateHash" BothCharset="False">
-        <Param Type="HCRYPTPROV" Name="hProv" />
-        <Param Type="ALG_ID" Name="Algid" />
-        <Param Type="HCRYPTKEY" Name="hKey" />
-        <Param Type="DWORD" Name="dwFlags" />
-        <Param Type="HCRYPTHASH*" Name="phHash" />
-        <Return Type="BOOL" />
-    </Api>
-    <Api Name="CPDecrypt" BothCharset="False">
-        <Param Type="HCRYPTKEY" Name="hKey" />
-        <Param Type="HCRYPTHASH" Name="hHash" /> 
-        <Param Type="BOOL" Name="Final" /> 
-        <Param Type="DWORD" Name="dwFlags" /> 
-        <Param Type="BYTE*" Name="pbData" />
-        <Param Type="DWORD*" NAme="pdwDataLen" />
-        <Return Type="BOOL" />
-    </Api>
-    <Api Name="CPDeriveKey" BothCharset="False">
-        <Param Type="HCRYPTPROV" Name="hProv," /> 
-        <Param Type="ALG_ID" Name="Algid," /> 
-        <Param Type="HCRYPTHASH" Name="hBaseData," /> 
-        <Param Type="DWORD" Name="dwFlags," /> 
-        <Param Type="HCRYPTKEY*" Name="phKey" />
-        <Return Type="BOOL" />
-    </Api>
-    <Api Name="CPDestroyHash" BothCharset="False">
-        <Param Type="HCRYPTHASH" Name="hHash" />
-        <Return Type="BOOL" />
-    </Api>
-    <!--
-<Api Name="CPDestroyKey" BothCharset="False">
-    </Api>
-<Api Name="CPDuplicateHash" BothCharset="False">
-    </Api>
-<Api Name="CPDuplicateKey" BothCharset="False">
-    </Api>
-<Api Name="CPEncrypt" BothCharset="False">
-    </Api>-->
-    <Api Name="CPExportKey" BothCharset="False">
-        <Param Type="HCRYPTKEY" Name="hKey," /> 
-        <Param Type="HCRYPTKEY" Name="hExpKey," /> 
-        <Param Type="DWORD" Name="dwBlobType," /> 
-        <Param Type="DWORD" Name="dwFlags," /> 
-        <Param Type="BYTE*" Name="pbData," /> 
-        <Param Type="DWORD*" Name="pdwbDataLe" />
-        <Return Type="BOOL" />
-    </Api>
-<!--
-<Api Name="CPGenKey" BothCharset="False">
-    </Api>
-<Api Name="CPGenRandom" BothCharset="False">
-    </Api>
-<Api Name="CPGetHashParam" BothCharset="False">
-    </Api>
--->
+        <Api Name="CPAcquireContext" BothCharset="False">
+            <Param Type="HCRYPTPROV*" Name="phProv" />
+            <Param Type="LPCTSTR*" Name="pszContainer" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Param Type="PVTableProvStruc" Name="pVTable" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPCreateHash" BothCharset="False">
+            <Param Type="HCRYPTPROV" Name="hProv" />
+            <Param Type="ALG_ID" Name="Algid" />
+            <Param Type="HCRYPTKEY" Name="hKey" />
+            <Param Type="[CryptCreateHashFlags]" Name="dwFlags" />
+            <Param Type="HCRYPTHASH*" Name="phHash" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPDecrypt" BothCharset="False">
+            <Param Type="HCRYPTKEY" Name="hKey" />
+            <Param Type="HCRYPTHASH" Name="hHash" /> 
+            <Param Type="BOOL" Name="Final" /> 
+            <Param Type="DWORD" Name="dwFlags" /> 
+            <Param Type="BYTE*" Name="pbData" Length="pdwDataLen" />
+            <Param Type="DWORD*" NAme="pdwDataLen" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPDeriveKey" BothCharset="False">
+            <Param Type="HCRYPTPROV" Name="hProv," /> 
+            <Param Type="ALG_ID" Name="Algid," /> 
+            <Param Type="HCRYPTHASH" Name="hBaseData," /> 
+            <Param Type="DWORD" Name="dwFlags," /> 
+            <Param Type="HCRYPTKEY*" Name="phKey" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPDestroyHash" BothCharset="False">
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPDestroyKey">
+            <Param Type="HCRYPTKEY" Name="hKey" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPDuplicateHash">
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Param Type="DWORD*" Name="pdwReserved" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Param Type="HCRYPTHASH*" Name="phHash" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPDuplicateKey">
+            <Param Type="HCRYPTKEY" Name="hKey" />
+            <Param Type="DWORD*" Name="pdwReserved" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Param Type="HCRYPTKEY*" Name="phKey" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPEncrypt">
+            <Param Type="HCRYPTKEY" Name="hKey" />
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Param Type="BOOL" Name="Final" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Param Type="BYTE*" Name="pbData" Length="pdwDataLen" />
+            <Param Type="DWORD*" Name="pdwDataLen" />
+            <Param Type="DWORD" Name="dwBufLen" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPExportKey" BothCharset="False">
+            <Param Type="HCRYPTKEY" Name="hKey," /> 
+            <Param Type="HCRYPTKEY" Name="hExpKey," /> 
+            <Param Type="DWORD" Name="dwBlobType," /> 
+            <Param Type="DWORD" Name="dwFlags," /> 
+            <Param Type="BYTE*" Name="pbData," /> 
+            <Param Type="DWORD*" Name="pdwbDataLe" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPGenKey">
+            <Param Type="HCRYPTPROV" Name="hProv" />
+            <Param Type="ALG_ID" Name="Algid" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Param Type="HCRYPTKEY*" Name="phKey" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPGenRandom">
+            <Param Type="HCRYPTPROV" Name="hProv" />
+            <Param Type="DWORD" Name="dwLen" />
+            <Param Type="BYTE*" Name="pbBuffer" Length="dwLen" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPGetHashParam">
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Param Type="[CryptHashParam]" Name="dwParam" />
+            <Param Type="BYTE*" Name="pbData" PostLength="pdwDataLen" />
+            <Param Type="DWORD*" Name="pdwDataLen" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
         <Api Name="CPGetKeyParam">
             <Param Type="HCRYPTKEY" Name="hKey" />
             <Param Type="[CryptKeyParam]" Name="dwParam" />
@@ -102,29 +134,86 @@
             <Param Type="DWORD" Name="dwFlags" />
             <Return Type="BOOL" />
         </Api>
-<!--
-<Api Name="CPGetProvParam" BothCharset="False">
-    </Api>
-<Api Name="CPGetUserKey" BothCharset="False">
-    </Api>
-<Api Name="CPHashData" BothCharset="False">
-    </Api>
-<Api Name="CPHashSessionKey" BothCharset="False">
-    </Api>
-<Api Name="CPImportKey" BothCharset="False">
-    </Api>
-<Api Name="CPReleaseContext" BothCharset="False">
-    </Api>
-<Api Name="CPSetHashParam" BothCharset="False">
-    </Api>
-<Api Name="CPSetKeyParam" BothCharset="False">
-    </Api>
-<Api Name="CPSetProvParam" BothCharset="False">
-    </Api>
-<Api Name="CPSignHash" BothCharset="False">
-    </Api>
-<Api Name="CPVerifySignature" BothCharset="False">
-    </Api>-->
+        <Api Name="CPGetProvParam">
+            <Param Type="HCRYPTPROV" Name="hProv" />
+            <Param Type="[CryptGetProvParam]" Name="dwParam" />
+            <Param Type="BYTE*" Name="pbData" PostLength="pdwDataLen" />
+            <Param Type="DWORD*" Name="pdwDataLen" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPGetUserKey">
+            <Param Type="HCRYPTPROV" Name="hProv" />
+            <Param Type="[CryptKeySpec]" Name="dwKeySpec" />
+            <Param Type="HCRYPTKEY*" Name="phUserKey" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPHashData">
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Param Type="BYTE*" Name="pbData" Length="dwDataLen" />
+            <Param Type="DWORD" Name="dwDataLen" />
+            <Param Type="[CryptHashDataFlags]" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPHashSessionKey">
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Param Type="HCRYPTKEY" Name="hKey" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPImportKey">
+            <Param Type="HCRYPTPROV" Name="hProv" />
+            <Param Type="BYTE*" Name="pbData" Length="dwDataLen" />
+            <Param Type="DWORD" Name="dwDataLen" />
+            <Param Type="HCRYPTKEY" Name="hPubKey" />
+            <Param Type="[CryptImportKeyFlags]" Name="dwFlags" />
+            <Param Type="HCRYPTKEY*" Name="phKey" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPReleaseContext">
+            <Param Type="HCRYPTPROV" Name="hProv" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPSetHashParam">
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Param Type="[CryptHashParam]" Name="dwParam" />
+            <Param Type="const BYTE*" Name="pbData" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPSetKeyParam">
+            <Param Type="HCRYPTKEY" Name="hKey" />
+            <Param Type="[CryptKeyParam]" Name="dwParam" />
+            <Param Type="const BYTE*" Name="pbData" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPSetProvParam">
+            <Param Type="HCRYPTPROV" Name="hProv" />
+            <Param Type="[CryptSetProvParam]" Name="dwParam" />
+            <Param Type="const BYTE*" Name="pbData" />
+            <Param Type="DWORD" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CPSignHash" BothCharset="True">
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Param Type="[CryptKeySpec]" Name="dwKeySpec" />
+            <Param Type="LPCTSTR" Name="sDescription" />
+            <Param Type="[CryptSignFlags]" Name="dwFlags" />
+            <Param Type="BYTE*" Name="pbSignature" Length="pdwSigLen" />
+            <Param Type="DWORD*" Name="pdwSigLen" />
+            <Return Type="BOOL" />
+        </Api>
+        <Api Name="CryptVerifySignature" BothCharset="True">
+            <Param Type="HCRYPTHASH" Name="hHash" />
+            <Param Type="BYTE*" Name="pbSignature" Length="dwSigLen" />
+            <Param Type="DWORD" Name="dwSigLen" />
+            <Param Type="HCRYPTKEY" Name="hPubKey" />
+            <Param Type="LPCTSTR" Name="sDescription" />
+            <Param Type="[CryptSignFlags]" Name="dwFlags" />
+            <Return Type="BOOL" />
+        </Api>
         <Api Name="DllRegisterServer">
             <Return Type="HRESULT" />
         </Api>
